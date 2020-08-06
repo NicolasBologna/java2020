@@ -1,3 +1,4 @@
+  
 package data;
 
 import java.sql.*;
@@ -11,7 +12,7 @@ public class DbConnector {
 	private String port="3306";
 	private String user="java";
 	private String password="himitsu";
-	private String db="java";
+	private String db="java?serverTimezone=UTC";
 	private int conectados=0;
 	private Connection conn=null;
 	

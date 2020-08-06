@@ -9,7 +9,7 @@ import entities.*;
 
 public class DataRol {
 	
-	public LinkedList<Rol> getAll(){
+	public LinkedList<Rol> getAllrol(){
 		Statement stmt=null;
 		ResultSet rs=null;
 		LinkedList<Rol> roles= new LinkedList<>();

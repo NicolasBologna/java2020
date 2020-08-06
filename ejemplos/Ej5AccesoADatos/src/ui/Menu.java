@@ -1,6 +1,7 @@
 package ui;
 
 
+import java.util.LinkedList;
 import java.util.Scanner;
 
 import entities.*;
@@ -11,7 +12,7 @@ public class Menu {
 	Login ctrlLogin = new Login();
 
 	public void start() {
-		s = new Scanner(System.in);
+		s = new Scanner(System.in); //para escanear lo que se ingresa por consola p
 		Persona p=login();
 		System.out.println("Bienvenido "+p.getNombre()+" "+p.getApellido());
 		System.out.println();
@@ -35,17 +36,17 @@ public class Menu {
 		case "find":
 			System.out.println(find());
 			break;
-		case "seach":
-	
+		case "search":
+	        System.out.println(search());
 			break;
 		case "new":
-			
+			System.out.println(newPersona());
 			break;
 		case "edit":
-			
+			System.out.println(update());
 			break;
 		case "delete":
-			
+			System.out.println(delete());
 			break;
 		default:
 			break;
@@ -53,7 +54,7 @@ public class Menu {
 	}
 
 	private String getCommand() {
-		System.out.println("Ingrese el comando segÃºn la opciÃ³n que desee realizar");
+		System.out.println("Ingrese el comando según la opción que desee realizar");
 		System.out.println("list\t\tlistar todos");
 		System.out.println("find\t\tbuscar por tipo y nro de documento"); //solo debe devolver 1
 		System.out.println("search\t\tlistar por apellido"); //puede devolver varios
@@ -80,6 +81,47 @@ public class Menu {
 		
 	}
 	
+	public boolean update() {
+		Persona p= new Persona();
+		p = find();
+		Documento d = new Documento();
+		
+		System.out.print("Nombre: ");
+		p.setNombre(s.nextLine());
+		
+		System.out.print("Apellido: ");
+		p.setApellido(s.nextLine());
+		
+		System.out.print("Tipo DNI:");
+		d.setTipo(s.nextLine());
+		
+		System.out.print("Numero DNI: ");
+		d.setNro(s.nextLine());
+		
+		p.setDocumento(d);
+		
+		System.out.print("E-mail: ");
+		p.setEmail(s.nextLine());
+		
+		System.out.print("Password: ");
+		p.setPassword(s.nextLine());
+		
+		System.out.print("Telefono: ");
+		p.setTel(s.nextLine());
+		
+		System.out.print("Habilitado: N/S ");
+		String opc = s.nextLine() ;
+		if (opc == "N") {
+			p.setHabilitado(false);
+		}
+		else {
+			p.setHabilitado(true);
+		}
+	
+		
+		return ctrlLogin.update(p);
+	}
+	
 	private Persona find() {
 		System.out.println();
 		Persona p=new Persona();
@@ -92,6 +134,65 @@ public class Menu {
 		d.setNro(s.nextLine());
 		
 		return ctrlLogin.getByDocumento(p);
+	}
+	
+	private  LinkedList<Persona> search(){
+		System.out.println();
+		System.out.print("Apellido:");
+		String surname=s.nextLine();
+		return ctrlLogin.getBySurname(surname);
+		
+		
+	}
+	
+
+	private boolean newPersona() { 
+		Persona p=new Persona();
+		Documento d=new Documento();
+		int idrol;
+		p.setDocumento(d);
+		System.out.print("Tipo doc: ");
+		d.setTipo(s.nextLine());
+
+		System.out.print("Nro doc: ");
+		d.setNro(s.nextLine());
+		
+		System.out.print("Nombre: ");
+		p.setNombre(s.nextLine());
+		
+		System.out.print("Apellido: ");
+		p.setApellido(s.nextLine());
+		
+		System.out.print("E-mail: ");
+		p.setEmail(s.nextLine());
+		
+		System.out.print("Password: ");
+		p.setPassword(s.nextLine());
+		
+		System.out.print("Telefono: ");
+		p.setTel(s.nextLine());
+		
+		System.out.print("Habilitado: N/S ");
+		String opc = s.nextLine() ;
+		if (opc == "N") {
+			p.setHabilitado(false);
+		}
+		else {
+			p.setHabilitado(true);
+		}
+	
+		System.out.println(ctrlLogin.getAllrol());
+		System.out.print("Ingrese el id del rol a asignar:");
+		idrol= Integer.parseInt(s.nextLine());
+		return ctrlLogin.add(p,idrol);
+	}
+	
+	public boolean delete() {
+		Persona p = new Persona ();
+		p = find();
+		
+		return ctrlLogin.delete(p);
+		
 	}
 
 }
